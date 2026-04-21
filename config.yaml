@@ -1,0 +1,32 @@
+llm:
+  provider: grok            # Options: grok | openai | anthropic | ollama
+  model: grok-3             # grok-3, grok-2, grok-beta
+  temperature: 0.0
+  max_tokens: 2048
+
+embeddings:
+  provider: huggingface     # Options: huggingface | openai
+  model: all-MiniLM-L6-v2   # Local model, no API key needed
+  # model: text-embedding-3-small  # Use this if switching to openai
+
+vector_store:
+  provider: chromadb
+  collection_name: self_rag_docs
+  persist_directory: ./data/chroma_db
+
+ingestion:
+  chunk_size: 1000
+  chunk_overlap: 200
+  data_directory: ./data/documents
+  supported_extensions:
+    - .pdf
+    - .txt
+    - .md
+    - .docx
+
+retrieval:
+  top_k: 5                  # Number of passages to retrieve
+
+self_rag:
+  max_retries: 3            # Max reflection retries per query
+  retrieve_threshold: 0.5   # Relevance score threshold (ISREL)
